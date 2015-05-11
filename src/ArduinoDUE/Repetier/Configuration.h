@@ -115,7 +115,7 @@ If a motor turns in the wrong direction change INVERT_X_DIR or INVERT_Y_DIR.
 #endif
 
 /** \brief Steps per rotation of stepper motor */
-#define STEPS_PER_ROTATION 200
+#define STEPS_PER_ROTATION 400
 
 /** \brief Micro stepping rate of X, Y and Y tower stepper drivers */
 #define MICRO_STEPS 32
@@ -151,7 +151,7 @@ Overridden if EEPROM activated.*/
 // extruders or coolers. PDM will give more signal changes per second, so on average it gives
 // the cleaner signal. The only advantage of PWM is giving signals at a fixed rate and never more
 // then PWM.
-#define PDM_FOR_EXTRUDER 1
+#define PDM_FOR_EXTRUDER 0
 #define PDM_FOR_COOLER 1
 
 // The firmware checks if the heater and sensor got decoupled, which is dangerous. SInce it will never reach target
@@ -182,7 +182,7 @@ Overridden if EEPROM activated.*/
 #define EXT0_X_OFFSET 0
 #define EXT0_Y_OFFSET 0
 // for skeinforge 40 and later, steps to pull the plasic 1 mm inside the extruder, not out.  Overridden if EEPROM activated.
-#define EXT0_STEPS_PER_MM 106 //425 // 825.698 //457 
+#define EXT0_STEPS_PER_MM 181 //425 // 825.698 //457 
 // What type of sensor is used?
 // 1 is 100k thermistor (Epcos B57560G0107F000 - RepRap-Fab.org and many other)
 // 2 is 200k thermistor
@@ -606,7 +606,7 @@ Value is used for all generic tables created. */
 // ############# Heated bed configuration ########################
 
 /** \brief Set true if you have a heated bed conected to your board, false if not */
-#define HAVE_HEATED_BED false
+#define HAVE_HEATED_BED true
 
 #define HEATED_BED_MAX_TEMP 120
 /** Skip M190 wait, if heated bed is already within x degrees. Fixed numbers only, 0 = off. */
@@ -629,7 +629,7 @@ Heat manager for heated bed:
 2 = Bang Bang, limited check every HEATED_BED_SET_INTERVAL. Use this with relay-driven beds to save life time
 3 = dead time control
 */
-#define HEATED_BED_HEAT_MANAGER 1
+#define HEATED_BED_HEAT_MANAGER 0
 /** \brief The maximum value, I-gain can contribute to the output.
 The precise values may differ for different nozzle/resistor combination.
  Overridden if EEPROM activated.
@@ -674,24 +674,24 @@ on this endstop.
 */
 #define ENDSTOP_PULLUP_X_MIN false
 #define ENDSTOP_PULLUP_Y_MIN false
-#define ENDSTOP_PULLUP_Z_MIN false
-#define ENDSTOP_PULLUP_X_MAX false
-#define ENDSTOP_PULLUP_Y_MAX false
-#define ENDSTOP_PULLUP_Z_MAX false
+#define ENDSTOP_PULLUP_Z_MIN true
+#define ENDSTOP_PULLUP_X_MAX true
+#define ENDSTOP_PULLUP_Y_MAX true
+#define ENDSTOP_PULLUP_Z_MAX true
 
 // Set to true to invert the logic of the endstops
 #define ENDSTOP_X_MIN_INVERTING false
 #define ENDSTOP_Y_MIN_INVERTING false
-#define ENDSTOP_Z_MIN_INVERTING false
-#define ENDSTOP_X_MAX_INVERTING false
-#define ENDSTOP_Y_MAX_INVERTING false
-#define ENDSTOP_Z_MAX_INVERTING false
+#define ENDSTOP_Z_MIN_INVERTING true
+#define ENDSTOP_X_MAX_INVERTING true
+#define ENDSTOP_Y_MAX_INVERTING true
+#define ENDSTOP_Z_MAX_INVERTING true
 
 // Set the values true where you have a hardware endstop. The Pin number is taken from pins.h.
 
 #define MIN_HARDWARE_ENDSTOP_X false
 #define MIN_HARDWARE_ENDSTOP_Y false
-#define MIN_HARDWARE_ENDSTOP_Z false
+#define MIN_HARDWARE_ENDSTOP_Z true
 #define MAX_HARDWARE_ENDSTOP_X true
 #define MAX_HARDWARE_ENDSTOP_Y true
 #define MAX_HARDWARE_ENDSTOP_Z true
@@ -766,7 +766,7 @@ on this endstop.
 // If EEPROM is enabled these values will be overidden with the values in the EEPROM
 #define X_MAX_LENGTH 200
 #define Y_MAX_LENGTH 200
-#define Z_MAX_LENGTH 400
+#define Z_MAX_LENGTH 410.8
 
 // Coordinates for the minimum axis. Can also be negative if you want to have the bed start at 0 and the printer can go to the left side
 // of the bed. Maximum coordinate is given by adding the above X_MAX_LENGTH values.
@@ -779,7 +779,7 @@ on this endstop.
 // ##########################################################################################
 
 // Microstep setting (Only functional when stepper driver microstep pins are connected to MCU. Currently only works for RAMBO boards
-#define MICROSTEP_MODES {32,32,32,16,16} // [1,2,4,8,16]
+#define MICROSTEP_MODES {32,32,32,1,1} // [1,2,4,8,16]
 
 // Motor Current setting (Only functional when motor driver current ref pins are connected to a digital trimpot on supported boards)
 #if MOTHERBOARD==301
@@ -787,7 +787,7 @@ on this endstop.
 #elif MOTHERBOARD==12
 #define MOTOR_CURRENT {35713,35713,35713,35713,35713} // Values 0-65535 (3D Master 35713 = ~1A)
 #elif (MOTHERBOARD==500) || (MOTHERBOARD==501) // Alligator boards
-#define MOTOR_CURRENT {130,130,130,110,110}
+#define MOTOR_CURRENT {150,150,150,210,210}
 #endif
 
 /** \brief Number of segments to generate for delta conversions per second of move
@@ -799,7 +799,7 @@ on this endstop.
 #if DRIVE_SYSTEM == DELTA
 /** \brief Delta rod length (mm)
 */
-#define DELTA_DIAGONAL_ROD 345 // mm
+#define DELTA_DIAGONAL_ROD 260 // mm
 
 
 /*  =========== Parameter essential for delta calibration ===================
@@ -836,7 +836,7 @@ on this endstop.
 #define DELTA_DIAGONAL_CORRECTION_C 0
 
 /** Max. radius (mm) the printer should be able to reach. */
-#define DELTA_MAX_RADIUS 200
+#define DELTA_MAX_RADIUS 110
 
 // Margin (mm) to avoid above tower minimum (xMin xMinsteps)
 // If your printer can put its carriage low enough the rod is horizontal without hitting the floor
@@ -859,14 +859,14 @@ on this endstop.
   measured from the center of the print area to the vertical smooth tower.
   Alternatly set this to the pivot to pivot horizontal rod distance, when head is at (0,0)
 */
-#define PRINTER_RADIUS 265.25
+#define PRINTER_RADIUS 164.5
 
 /* ========== END Delta calibation data ==============*/
 
 /** When true the delta will home to z max when reset/powered over cord. That way you start with well defined coordinates.
 If you don't do it, make sure to home first before your first move.
 */
-#define DELTA_HOME_ON_POWER 0
+#define DELTA_HOME_ON_POWER true
 
 /** To allow software correction of misaligned endstops, you can set the correction in steps here. If you have EEPROM enabled
 you can also change the values online and autoleveling will store the results here. */
@@ -914,9 +914,9 @@ Mega. Used only for nonlinear systems like delta or tuga. */
 #define MAX_FEEDRATE_Z 500
 
 /** Home position speed in mm/s. Overridden if EEPROM activated. */
-#define HOMING_FEEDRATE_X 80
-#define HOMING_FEEDRATE_Y 80
-#define HOMING_FEEDRATE_Z 80
+#define HOMING_FEEDRATE_X 120
+#define HOMING_FEEDRATE_Y 120
+#define HOMING_FEEDRATE_Z 120
 
 /** Set order of axis homing. Use HOME_ORDER_XYZ and replace XYZ with your order. */
 #define HOMING_ORDER HOME_ORDER_ZXY
@@ -942,7 +942,7 @@ included delay is already enough.
  might be even slower or you are using a fast arduino board with slow driver. Normally 0 works.
  If you get skewed print, you might try 1 microsecond here.
  */
-#define DIRECTION_DELAY 0
+#define DIRECTION_DELAY 1
 
 /** The firmware can only handle 16000Hz interrupt frequency cleanly. If you need higher speeds
 a faster solution is needed, and this is to double/quadruple the steps in one interrupt call.
@@ -954,7 +954,7 @@ additional stepper interrupts with all it's overhead. As a result you can go as 
 /** If you need frequencies off more then 30000 you definitely need to enable this. If you have only 1/8 stepping
 enabling this may cause to stall your moves when 20000Hz is reached.
 */
-#define ALLOW_QUADSTEPPING 1
+#define ALLOW_QUADSTEPPING 0
 /** If you reach STEP_DOUBLER_FREQUENCY the firmware will do 2 or 4 steps with nearly no delay. That can be too fast
 for some printers causing an early stall.
 
@@ -1193,12 +1193,12 @@ See: AdditionalArduinoFiles: README.txt on how to install them.
 
 /* Z-Probing */
 
-#define FEATURE_Z_PROBE false
+#define FEATURE_Z_PROBE true
 #define Z_PROBE_PIN Z_MIN_PIN
 #define Z_PROBE_PULLUP 1
-#define Z_PROBE_ON_HIGH 1
-#define Z_PROBE_X_OFFSET 0
-#define Z_PROBE_Y_OFFSET 0
+#define Z_PROBE_ON_HIGH 0
+#define Z_PROBE_X_OFFSET 16
+#define Z_PROBE_Y_OFFSET 7
 #define Z_PROBE_BED_DISTANCE 5.0 // Higher than max bed level distance error in mm
 
 // Waits for a signal to start. Valid signals are probe hit and ok button.
@@ -1207,10 +1207,10 @@ See: AdditionalArduinoFiles: README.txt on how to install them.
 /** Speed of z-axis in mm/s when probing */
 #define Z_PROBE_SPEED 2
 #define Z_PROBE_XY_SPEED 150
-#define Z_PROBE_SWITCHING_DISTANCE 1.5 // Distance to safely switch off probe after it was activated
-#define Z_PROBE_REPETITIONS 5 // Repetitions for probing at one point. 
+#define Z_PROBE_SWITCHING_DISTANCE .4 // Distance to safely switch off probe after it was activated
+#define Z_PROBE_REPETITIONS 2 // Repetitions for probing at one point. 
 /** The height is the difference between activated probe position and nozzle height. */
-#define Z_PROBE_HEIGHT 39.91
+#define Z_PROBE_HEIGHT 5.53
 /** These scripts are run before resp. after the z-probe is done. Add here code to activate/deactivate probe if needed. */
 #define Z_PROBE_START_SCRIPT ""
 #define Z_PROBE_FINISHED_SCRIPT ""
@@ -1220,12 +1220,12 @@ See: AdditionalArduinoFiles: README.txt on how to install them.
    The same 3 points are used for the G29 command.
 */
 #define FEATURE_AUTOLEVEL true
-#define Z_PROBE_X1 -69.28
+#define Z_PROBE_X1 -60
 #define Z_PROBE_Y1 -40
-#define Z_PROBE_X2 69.28
-#define Z_PROBE_Y2 -40
+#define Z_PROBE_X2 -60
+#define Z_PROBE_Y2 40
 #define Z_PROBE_X3 0
-#define Z_PROBE_Y3 80
+#define Z_PROBE_Y3 40
 
 /* DISTORTION_CORRECTION compensates the distortion caused by mechanical imprecisions of nonlinear (i.e. DELTA) printers
  * assumes that the floor is plain (i.e. glass plate)
@@ -1238,7 +1238,7 @@ See: AdditionalArduinoFiles: README.txt on how to install them.
  * DISTORTION_CORRECTION_R is the distance of last row or collumn from center
  */
 
-#define DISTORTION_CORRECTION         0
+#define DISTORTION_CORRECTION         1
 #define DISTORTION_CORRECTION_POINTS  5
 #define DISTORTION_CORRECTION_R       80
 /** Uses eeprom instead of ram. Allows bigger matrix (up to 22x22) without any ram cost.
@@ -1276,7 +1276,7 @@ Always hard to say since the other angle is 89° in this case!
 /** \brief Experimental calibration utility for delta printers
  * Change 1 to 0 to disable
 */
-#define FEATURE_SOFTWARE_LEVELING 0
+#define FEATURE_SOFTWARE_LEVELING 1
 
 /* Babystepping allows to change z height during print without changing official z height */
 #define FEATURE_BABYSTEPPING 0
