@@ -151,7 +151,7 @@ Overridden if EEPROM activated.*/
 // extruders or coolers. PDM will give more signal changes per second, so on average it gives
 // the cleaner signal. The only advantage of PWM is giving signals at a fixed rate and never more
 // then PWM.
-#define PDM_FOR_EXTRUDER 0
+#define PDM_FOR_EXTRUDER 1
 #define PDM_FOR_COOLER 1
 
 // The firmware checks if the heater and sensor got decoupled, which is dangerous. SInce it will never reach target
@@ -182,7 +182,7 @@ Overridden if EEPROM activated.*/
 #define EXT0_X_OFFSET 0
 #define EXT0_Y_OFFSET 0
 // for skeinforge 40 and later, steps to pull the plasic 1 mm inside the extruder, not out.  Overridden if EEPROM activated.
-#define EXT0_STEPS_PER_MM 181 //425 // 825.698 //457 
+#define EXT0_STEPS_PER_MM 396 //425 // 825.698 //457 
 // What type of sensor is used?
 // 1 is 100k thermistor (Epcos B57560G0107F000 - RepRap-Fab.org and many other)
 // 2 is 200k thermistor
@@ -779,7 +779,7 @@ on this endstop.
 // ##########################################################################################
 
 // Microstep setting (Only functional when stepper driver microstep pins are connected to MCU. Currently only works for RAMBO boards
-#define MICROSTEP_MODES {32,32,32,1,1} // [1,2,4,8,16]
+#define MICROSTEP_MODES {32,32,32,16,16} // [1,2,4,8,16]
 
 // Motor Current setting (Only functional when motor driver current ref pins are connected to a digital trimpot on supported boards)
 #if MOTHERBOARD==301
@@ -787,7 +787,7 @@ on this endstop.
 #elif MOTHERBOARD==12
 #define MOTOR_CURRENT {35713,35713,35713,35713,35713} // Values 0-65535 (3D Master 35713 = ~1A)
 #elif (MOTHERBOARD==500) || (MOTHERBOARD==501) // Alligator boards
-#define MOTOR_CURRENT {150,150,150,210,210}
+#define MOTOR_CURRENT {135,135,135,135,135}
 #endif
 
 /** \brief Number of segments to generate for delta conversions per second of move
@@ -942,7 +942,7 @@ included delay is already enough.
  might be even slower or you are using a fast arduino board with slow driver. Normally 0 works.
  If you get skewed print, you might try 1 microsecond here.
  */
-#define DIRECTION_DELAY 1
+#define DIRECTION_DELAY 0
 
 /** The firmware can only handle 16000Hz interrupt frequency cleanly. If you need higher speeds
 a faster solution is needed, and this is to double/quadruple the steps in one interrupt call.
@@ -954,7 +954,7 @@ additional stepper interrupts with all it's overhead. As a result you can go as 
 /** If you need frequencies off more then 30000 you definitely need to enable this. If you have only 1/8 stepping
 enabling this may cause to stall your moves when 20000Hz is reached.
 */
-#define ALLOW_QUADSTEPPING 0
+#define ALLOW_QUADSTEPPING 1
 /** If you reach STEP_DOUBLER_FREQUENCY the firmware will do 2 or 4 steps with nearly no delay. That can be too fast
 for some printers causing an early stall.
 
