@@ -182,7 +182,7 @@ Overridden if EEPROM activated.*/
 #define EXT0_X_OFFSET 0
 #define EXT0_Y_OFFSET 0
 // for skeinforge 40 and later, steps to pull the plasic 1 mm inside the extruder, not out.  Overridden if EEPROM activated.
-#define EXT0_STEPS_PER_MM 396 //425 // 825.698 //457 
+#define EXT0_STEPS_PER_MM 658 //425 // 825.698 //457 
 // What type of sensor is used?
 // 1 is 100k thermistor (Epcos B57560G0107F000 - RepRap-Fab.org and many other)
 // 2 is 200k thermistor
@@ -1124,7 +1124,7 @@ matches, the stored values are used to overwrite the settings.
 IMPORTANT: With mode <>0 some changes in Configuration.h are not set any more, as they are
            taken from the EEPROM.
 */
-#define EEPROM_MODE 1
+#define EEPROM_MODE 2
 
 
 /**************** duplicate motor driver ***************
@@ -1428,8 +1428,8 @@ Values must be in range 1..255
 // Values used for preheat
 #define UI_SET_PRESET_HEATED_BED_TEMP_PLA 60
 #define UI_SET_PRESET_EXTRUDER_TEMP_PLA   180
-#define UI_SET_PRESET_HEATED_BED_TEMP_ABS 110
-#define UI_SET_PRESET_EXTRUDER_TEMP_ABS   240
+#define UI_SET_PRESET_HEATED_BED_TEMP_ABS 105
+#define UI_SET_PRESET_EXTRUDER_TEMP_ABS   236
 // Extreme values
 #define UI_SET_MIN_HEATED_BED_TEMP  55
 #define UI_SET_MAX_HEATED_BED_TEMP 120
