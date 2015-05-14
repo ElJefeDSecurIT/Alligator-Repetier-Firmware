@@ -161,12 +161,12 @@ Overridden if EEPROM activated.*/
 
 // If the temp. is on hold target, it may not sway more then this degrees celsius, or we mark
 // sensor as defect.
-#define DECOUPLING_TEST_MAX_HOLD_VARIANCE 7
+#define DECOUPLING_TEST_MAX_HOLD_VARIANCE 15
 // Minimum temp. rise we expect after the set duration of full heating is over.
 // Always keep a good safety margin to get no false positives. If your period is e.g. 10 seconds
 // because at startup you already need 7 seconds until heater starts to rise temp. for sensor
 // then you have 3 seconds of increased heating to reach 1°„C.
-#define DECOUPLING_TEST_MIN_TEMP_RISE 1
+#define DECOUPLING_TEST_MIN_TEMP_RISE 0.4L
 // Set to 1 if you want firmware to kill print on decouple
 #define KILL_IF_SENSOR_DEFECT 0
 
@@ -290,9 +290,9 @@ The codes are only executed for multiple extruder when changing the extruder. */
 /** The extruder cooler is a fan to cool the extruder when it is heating. If you turn the etxruder on, the fan goes on. */
 #define EXT0_EXTRUDER_COOLER_PIN -1
 /** PWM speed for the cooler fan. 0=off 255=full speed */
-#define EXT0_EXTRUDER_COOLER_SPEED 205
+#define EXT0_EXTRUDER_COOLER_SPEED 156
 /** Time in ms between a heater action and test of success. Must be more then time between turning heater on and first temp. rise! */
-#define EXT0_DECOUPLE_TEST_PERIOD 12000
+#define EXT0_DECOUPLE_TEST_PERIOD 20000
 /** Pin which toggles regualrly during extrusion allowing jam control. -1 = disabled */
 #define EXT0_JAM_PIN -1
 /** Pullup resistor for jam pin? */
@@ -642,7 +642,7 @@ To prevent a long deviation from the target zone, this value limits the lower va
 A good start is 30 lower then the optimal value. You need to leave room for cooling.
  Overridden if EEPROM activated.
 */
-#define HEATED_BED_PID_INTEGRAL_DRIVE_MIN 80
+#define HEATED_BED_PID_INTEGRAL_DRIVE_MIN 215
 /** P-gain.  Overridden if EEPROM activated. */
 #define HEATED_BED_PID_PGAIN_OR_DEAD_TIME   196
 /** I-gain  Overridden if EEPROM activated.*/
@@ -653,11 +653,11 @@ A good start is 30 lower then the optimal value. You need to leave room for cool
 #define HEATED_BED_PID_MAX 255
 // Time to see a temp. change when fully heating. Consider that beds at higher temp. need longer to rise and cold
 // beds need some time to get the temp. to the sensor. Time is in milliseconds!
-#define HEATED_BED_DECOUPLE_TEST_PERIOD 360000
+#define HEATED_BED_DECOUPLE_TEST_PERIOD 60000
 
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
-#define MAXTEMP 260
+#define MAXTEMP 275
 
 /** Extreme values to detect defect thermistors. */
 #define MIN_DEFECT_TEMPERATURE -10
@@ -729,9 +729,9 @@ on this endstop.
 #define max_software_endstop_r true
 
 //If true, axis won't move to coordinates less than zero.
-#define min_software_endstop_x false
-#define min_software_endstop_y false
-#define min_software_endstop_z false
+#define min_software_endstop_x true
+#define min_software_endstop_y true
+#define min_software_endstop_z true
 
 //If true, axis won't move to coordinates greater than the defined lengths below.
 #define max_software_endstop_x true
