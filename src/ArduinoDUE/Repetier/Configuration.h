@@ -166,7 +166,7 @@ Overridden if EEPROM activated.*/
 // Always keep a good safety margin to get no false positives. If your period is e.g. 10 seconds
 // because at startup you already need 7 seconds until heater starts to rise temp. for sensor
 // then you have 3 seconds of increased heating to reach 1°„C.
-#define DECOUPLING_TEST_MIN_TEMP_RISE 0.4L
+#define DECOUPLING_TEST_MIN_TEMP_RISE 0.25L
 // Set to 1 if you want firmware to kill print on decouple
 #define KILL_IF_SENSOR_DEFECT 0
 
@@ -231,7 +231,7 @@ Overridden if EEPROM activated.*/
 - 3 = Dead-time control. PID_P becomes dead-time in seconds.
  Overridden if EEPROM activated.
 */
-#define EXT0_HEAT_MANAGER 1
+#define EXT0_HEAT_MANAGER 0
 /** Wait x seconds, after reaching target temperature. Only used for M109.  Overridden if EEPROM activated. */
 #define EXT0_WATCHPERIOD 1
 
@@ -254,13 +254,14 @@ A good start is 30 lower then the optimal value. You need to leave room for cool
  Overridden if EEPROM activated.
 */
 #define EXT0_PID_INTEGRAL_DRIVE_MIN 60
+
 /** P-gain.  Overridden if EEPROM activated. */
-#define EXT0_PID_PGAIN_OR_DEAD_TIME   24
+#define EXT0_PID_PGAIN_OR_DEAD_TIME   8.19
 /** I-gain. Overridden if EEPROM activated.
 */
-#define EXT0_PID_I   0.88
+#define EXT0_PID_I   0.28
 /** Dgain.  Overridden if EEPROM activated.*/
-#define EXT0_PID_D 80
+#define EXT0_PID_D 59.08
 // maximum time the heater is can be switched on. Max = 255.  Overridden if EEPROM activated.
 #define EXT0_PID_MAX 255
 /** \brief Faktor for the advance algorithm. 0 disables the algorithm.  Overridden if EEPROM activated.
@@ -292,7 +293,7 @@ The codes are only executed for multiple extruder when changing the extruder. */
 /** PWM speed for the cooler fan. 0=off 255=full speed */
 #define EXT0_EXTRUDER_COOLER_SPEED 156
 /** Time in ms between a heater action and test of success. Must be more then time between turning heater on and first temp. rise! */
-#define EXT0_DECOUPLE_TEST_PERIOD 20000
+#define EXT0_DECOUPLE_TEST_PERIOD 30000
 /** Pin which toggles regualrly during extrusion allowing jam control. -1 = disabled */
 #define EXT0_JAM_PIN -1
 /** Pullup resistor for jam pin? */
@@ -608,7 +609,7 @@ Value is used for all generic tables created. */
 /** \brief Set true if you have a heated bed conected to your board, false if not */
 #define HAVE_HEATED_BED true
 
-#define HEATED_BED_MAX_TEMP 150
+#define HEATED_BED_MAX_TEMP 120
 /** Skip M190 wait, if heated bed is already within x degrees. Fixed numbers only, 0 = off. */
 #define SKIP_M190_IF_WITHIN 5
 
@@ -620,7 +621,7 @@ Value is used for all generic tables created. */
 /** \brief Pin to enable heater for bed. */
 #define HEATED_BED_HEATER_PIN HEATER_1_PIN
 // How often the temperature of the heated bed is set (msec)
-#define HEATED_BED_SET_INTERVAL 10000
+#define HEATED_BED_SET_INTERVAL 6000
 
 /**
 Heat manager for heated bed:
@@ -653,7 +654,7 @@ A good start is 30 lower then the optimal value. You need to leave room for cool
 #define HEATED_BED_PID_MAX 255
 // Time to see a temp. change when fully heating. Consider that beds at higher temp. need longer to rise and cold
 // beds need some time to get the temp. to the sensor. Time is in milliseconds!
-#define HEATED_BED_DECOUPLE_TEST_PERIOD 60000
+#define HEATED_BED_DECOUPLE_TEST_PERIOD 90000
 
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
