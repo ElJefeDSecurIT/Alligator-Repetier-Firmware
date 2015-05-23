@@ -166,7 +166,7 @@ Overridden if EEPROM activated.*/
 // Always keep a good safety margin to get no false positives. If your period is e.g. 10 seconds
 // because at startup you already need 7 seconds until heater starts to rise temp. for sensor
 // then you have 3 seconds of increased heating to reach 1°„C.
-#define DECOUPLING_TEST_MIN_TEMP_RISE 0.25L
+#define DECOUPLING_TEST_MIN_TEMP_RISE 0.15L
 // Set to 1 if you want firmware to kill print on decouple
 #define KILL_IF_SENSOR_DEFECT 0
 
@@ -182,7 +182,7 @@ Overridden if EEPROM activated.*/
 #define EXT0_X_OFFSET 0
 #define EXT0_Y_OFFSET 0
 // for skeinforge 40 and later, steps to pull the plasic 1 mm inside the extruder, not out.  Overridden if EEPROM activated.
-#define EXT0_STEPS_PER_MM 658 //425 // 825.698 //457 
+#define EXT0_STEPS_PER_MM 698 //425 // 825.698 //457 
 // What type of sensor is used?
 // 1 is 100k thermistor (Epcos B57560G0107F000 - RepRap-Fab.org and many other)
 // 2 is 200k thermistor
@@ -231,9 +231,9 @@ Overridden if EEPROM activated.*/
 - 3 = Dead-time control. PID_P becomes dead-time in seconds.
  Overridden if EEPROM activated.
 */
-#define EXT0_HEAT_MANAGER 0
+#define EXT0_HEAT_MANAGER 1
 /** Wait x seconds, after reaching target temperature. Only used for M109.  Overridden if EEPROM activated. */
-#define EXT0_WATCHPERIOD 1
+#define EXT0_WATCHPERIOD 7
 
 /** \brief The maximum value, I-gain can contribute to the output.
 
@@ -245,7 +245,7 @@ Values for starts:
 The precise values may differ for different nozzle/resistor combination.
  Overridden if EEPROM activated.
 */
-#define EXT0_PID_INTEGRAL_DRIVE_MAX 205
+#define EXT0_PID_INTEGRAL_DRIVE_MAX 255
 /** \brief lower value for integral part
 
 The I state should converge to the exact heater output needed for the target temperature.
@@ -253,7 +253,7 @@ To prevent a long deviation from the target zone, this value limits the lower va
 A good start is 30 lower then the optimal value. You need to leave room for cooling.
  Overridden if EEPROM activated.
 */
-#define EXT0_PID_INTEGRAL_DRIVE_MIN 60
+#define EXT0_PID_INTEGRAL_DRIVE_MIN 205
 
 /** P-gain.  Overridden if EEPROM activated. */
 #define EXT0_PID_PGAIN_OR_DEAD_TIME   8.19
@@ -289,11 +289,11 @@ The codes are only executed for multiple extruder when changing the extruder. */
 #define EXT0_SELECT_COMMANDS "M117 Extruder 1"
 #define EXT0_DESELECT_COMMANDS ""
 /** The extruder cooler is a fan to cool the extruder when it is heating. If you turn the etxruder on, the fan goes on. */
-#define EXT0_EXTRUDER_COOLER_PIN -1
+#define EXT0_EXTRUDER_COOLER_PIN FAN2_PIN
 /** PWM speed for the cooler fan. 0=off 255=full speed */
-#define EXT0_EXTRUDER_COOLER_SPEED 156
+#define EXT0_EXTRUDER_COOLER_SPEED 255
 /** Time in ms between a heater action and test of success. Must be more then time between turning heater on and first temp. rise! */
-#define EXT0_DECOUPLE_TEST_PERIOD 30000
+#define EXT0_DECOUPLE_TEST_PERIOD 45000
 /** Pin which toggles regualrly during extrusion allowing jam control. -1 = disabled */
 #define EXT0_JAM_PIN -1
 /** Pullup resistor for jam pin? */
@@ -400,7 +400,7 @@ cog. Direct drive extruder need 0. */
 #define EXT1_SELECT_COMMANDS "M117 Extruder 2"
 #define EXT1_DESELECT_COMMANDS ""
 /** The extruder cooler is a fan to cool the extruder when it is heating. If you turn the etxruder on, the fan goes on. */
-#define EXT1_EXTRUDER_COOLER_PIN -1
+#define EXT1_EXTRUDER_COOLER_PIN FAN2_PIN
 /** PWM speed for the cooler fan. 0=off 255=full speed */
 #define EXT1_EXTRUDER_COOLER_SPEED 255
 /** Time in ms between a heater action and test of success. Must be more then time between turning heater on and first temp. rise! */
@@ -468,13 +468,13 @@ Determine what should be done if a jam is detected
 If you get much overshoot at the first temperature set, because the heater is going full power too long, you
 need to increase this value. For one 6.8 Ohm heater 10 is ok. With two 6.8 Ohm heater use 15.
 */
-#define PID_CONTROL_RANGE 15
+#define PID_CONTROL_RANGE 25
 
 /** Prevent extrusions longer then x mm for one command. This is especially important if you abort a print. Then the
 extrusion poistion might be at any value like 23344. If you then have an G1 E-2 it will roll back 23 meter! */
 #define EXTRUDE_MAXLENGTH 100
 /** Skip wait, if the extruder temperature is already within x degrees. Only fixed numbers, 0 = off */
-#define SKIP_M109_IF_WITHIN 2
+#define SKIP_M109_IF_WITHIN 5
 
 /** \brief Set PID scaling
 
@@ -611,7 +611,7 @@ Value is used for all generic tables created. */
 
 #define HEATED_BED_MAX_TEMP 120
 /** Skip M190 wait, if heated bed is already within x degrees. Fixed numbers only, 0 = off. */
-#define SKIP_M190_IF_WITHIN 5
+#define SKIP_M190_IF_WITHIN 7
 
 // Select type of your heated bed. It's the same as for EXT0_TEMPSENSOR_TYPE
 // set to 0 if you don't have a heated bed
@@ -621,7 +621,7 @@ Value is used for all generic tables created. */
 /** \brief Pin to enable heater for bed. */
 #define HEATED_BED_HEATER_PIN HEATER_1_PIN
 // How often the temperature of the heated bed is set (msec)
-#define HEATED_BED_SET_INTERVAL 6000
+#define HEATED_BED_SET_INTERVAL 1000
 
 /**
 Heat manager for heated bed:
@@ -630,7 +630,7 @@ Heat manager for heated bed:
 2 = Bang Bang, limited check every HEATED_BED_SET_INTERVAL. Use this with relay-driven beds to save life time
 3 = dead time control
 */
-#define HEATED_BED_HEAT_MANAGER 1
+#define HEATED_BED_HEAT_MANAGER 0
 /** \brief The maximum value, I-gain can contribute to the output.
 The precise values may differ for different nozzle/resistor combination.
  Overridden if EEPROM activated.
@@ -643,7 +643,7 @@ To prevent a long deviation from the target zone, this value limits the lower va
 A good start is 30 lower then the optimal value. You need to leave room for cooling.
  Overridden if EEPROM activated.
 */
-#define HEATED_BED_PID_INTEGRAL_DRIVE_MIN 215
+#define HEATED_BED_PID_INTEGRAL_DRIVE_MIN 205
 /** P-gain.  Overridden if EEPROM activated. */
 #define HEATED_BED_PID_PGAIN_OR_DEAD_TIME   196
 /** I-gain  Overridden if EEPROM activated.*/
@@ -765,9 +765,9 @@ on this endstop.
 // For delta robot Z_MAX_LENGTH is the maximum travel of the towers and should be set to the distance between the hotend
 // and the platform when the printer is at its home position.
 // If EEPROM is enabled these values will be overidden with the values in the EEPROM
-#define X_MAX_LENGTH 200
-#define Y_MAX_LENGTH 200
-#define Z_MAX_LENGTH 410.8
+#define X_MAX_LENGTH 160
+#define Y_MAX_LENGTH 160
+#define Z_MAX_LENGTH 419.400
 
 // Coordinates for the minimum axis. Can also be negative if you want to have the bed start at 0 and the printer can go to the left side
 // of the bed. Maximum coordinate is given by adding the above X_MAX_LENGTH values.
@@ -837,7 +837,7 @@ on this endstop.
 #define DELTA_DIAGONAL_CORRECTION_C 0
 
 /** Max. radius (mm) the printer should be able to reach. */
-#define DELTA_MAX_RADIUS 110
+#define DELTA_MAX_RADIUS 100
 
 // Margin (mm) to avoid above tower minimum (xMin xMinsteps)
 // If your printer can put its carriage low enough the rod is horizontal without hitting the floor
@@ -860,7 +860,7 @@ on this endstop.
   measured from the center of the print area to the vertical smooth tower.
   Alternatly set this to the pivot to pivot horizontal rod distance, when head is at (0,0)
 */
-#define PRINTER_RADIUS 164.5
+#define PRINTER_RADIUS 162.6
 
 /* ========== END Delta calibation data ==============*/
 
@@ -1076,8 +1076,8 @@ to activate the quadratic term. Only adds lots of computations and storage usage
  Overridden if EEPROM activated.
 */
 //#define BAUDRATE 76800
-#define BAUDRATE 115200
-//#define BAUDRATE 250000
+//#define BAUDRATE 115200
+#define BAUDRATE 250000
 
 /**
 Some boards like Gen7 have a power on pin, to enable the atx power supply. If this is defined,
@@ -1198,9 +1198,9 @@ See: AdditionalArduinoFiles: README.txt on how to install them.
 #define Z_PROBE_PIN Z_MIN_PIN
 #define Z_PROBE_PULLUP 1
 #define Z_PROBE_ON_HIGH 0
-#define Z_PROBE_X_OFFSET 16
-#define Z_PROBE_Y_OFFSET 7
-#define Z_PROBE_BED_DISTANCE 5.0 // Higher than max bed level distance error in mm
+#define Z_PROBE_X_OFFSET 22
+#define Z_PROBE_Y_OFFSET 12
+#define Z_PROBE_BED_DISTANCE 15.0 // Higher than max bed level distance error in mm
 
 // Waits for a signal to start. Valid signals are probe hit and ok button.
 // This is needful if you have the probe trigger by hand.
@@ -1211,7 +1211,7 @@ See: AdditionalArduinoFiles: README.txt on how to install them.
 #define Z_PROBE_SWITCHING_DISTANCE .4 // Distance to safely switch off probe after it was activated
 #define Z_PROBE_REPETITIONS 2 // Repetitions for probing at one point. 
 /** The height is the difference between activated probe position and nozzle height. */
-#define Z_PROBE_HEIGHT 5.53
+#define Z_PROBE_HEIGHT 12.3
 /** These scripts are run before resp. after the z-probe is done. Add here code to activate/deactivate probe if needed. */
 #define Z_PROBE_START_SCRIPT ""
 #define Z_PROBE_FINISHED_SCRIPT ""
@@ -1221,12 +1221,12 @@ See: AdditionalArduinoFiles: README.txt on how to install them.
    The same 3 points are used for the G29 command.
 */
 #define FEATURE_AUTOLEVEL true
-#define Z_PROBE_X1 -60
+#define Z_PROBE_X1 -40
 #define Z_PROBE_Y1 -40
-#define Z_PROBE_X2 -60
-#define Z_PROBE_Y2 40
-#define Z_PROBE_X3 0
-#define Z_PROBE_Y3 40
+#define Z_PROBE_X2 60
+#define Z_PROBE_Y2 -50
+#define Z_PROBE_X3 60
+#define Z_PROBE_Y3 60
 
 /* DISTORTION_CORRECTION compensates the distortion caused by mechanical imprecisions of nonlinear (i.e. DELTA) printers
  * assumes that the floor is plain (i.e. glass plate)
@@ -1256,7 +1256,7 @@ point. So updting correction every 15 calls gives us at least 2 updates between 
 measured points.
 NOTE: Explicit z changes will always trigger an update!
 */
-#define DISTORTION_UPDATE_FREQUENCY   15
+#define DISTORTION_UPDATE_FREQUENCY   8
 /** z distortion degrades to 0 from this height on. You should start after the first layer to get
 best bonding with surface. */
 #define DISTORTION_START_DEGRADE 0.5
